@@ -1,13 +1,11 @@
 package com.calaf.cleanspring
 
-import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
-@SpringBootTest
-class CleanSpringApplicationTests {
 
-    @Test
-    fun contextLoads() {
+class CleanSpringApplicationTests : StringSpec({
+    "foo" {
+        "A" shouldBe "A"
     }
-
-}
+})
