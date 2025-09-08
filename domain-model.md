@@ -69,6 +69,13 @@ _Enum_
 - ACTIVE : 가입 완료, 활성 상태
 - DEACTIVATED : 탈퇴 상태
 
+### 비밀번호 인코더 (PasswordEncoder)
+_Domain Service_
+
+#### 행위
+- 'encode()' : 암호화하기
+- 'matches()' : 암호 일치 확인
+
 ### 강사
 
 ### 강의

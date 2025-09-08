@@ -1,5 +1,6 @@
 package com.calaf.cleanspring.domain
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
@@ -7,11 +8,22 @@ import io.kotest.matchers.shouldBe
 class MemberTest : FreeSpec({
     lateinit var member: Member
 
+    val passwordEncoder: PasswordEncoder = object : PasswordEncoder {
+        override fun encode(password: String): String {
+            return password
+        }
+
+        override fun matches(password: String, encodedPassword: String): Boolean {
+            return encode(password) == encodedPassword
+        }
+    }
+
     beforeTest {
-        member = Member(
+        member = Member.create(
             nickname = "A",
             email = "B",
-            passwordHash = "C"
+            password = "secret",
+            passwordEncoder = passwordEncoder
         )
     }
 
@@ -61,5 +73,28 @@ class MemberTest : FreeSpec({
                 member.deactivate()
             }
         }
+    }
+
+    "비밀번호를 검증한다 " {
+        assertSoftly {
+            member.verifyPassword("secret", passwordEncoder) shouldBe true
+            member.verifyPassword("hello", passwordEncoder) shouldBe false
+        }
+    }
+
+    "멤버 닉네임 변경" {
+        assertSoftly {
+            member.getNickname() shouldBe "A"
+
+            member.changeNickname("B")
+
+            member.getNickname() shouldBe "B"
+        }
+    }
+
+    "멤버 비밀번호 변경" {
+        member.changePassword("<PASSWORD>", passwordEncoder)
+
+        member.verifyPassword("<PASSWORD>", passwordEncoder) shouldBe true
     }
 })
