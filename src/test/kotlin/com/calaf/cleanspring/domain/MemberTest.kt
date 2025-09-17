@@ -20,9 +20,11 @@ class MemberTest : FreeSpec({
 
     beforeTest {
         member = Member.create(
-            nickname = "A",
-            email = "B",
-            password = "secret",
+            MemberCreateRequest(
+                nickname = "A",
+                email = "email@github.com",
+                password = "secret",
+            ),
             passwordEncoder = passwordEncoder
         )
     }
@@ -96,5 +98,22 @@ class MemberTest : FreeSpec({
         member.changePassword("<PASSWORD>", passwordEncoder)
 
         member.verifyPassword("<PASSWORD>", passwordEncoder) shouldBe true
+    }
+
+    "isActive 메서드는 멤버 활성화 상태를 반환한다" {
+        member.isActive() shouldBe false
+
+        member.activate()
+
+        member.isActive() shouldBe true
+    }
+
+    "올바르지 않은 이메일은 예외" {
+        shouldThrow<IllegalArgumentException> {
+            Member.create(
+                MemberCreateRequest(nickname = "A", email = "invalidemail.com", password = "secret"),
+                passwordEncoder = passwordEncoder
+            )
+        }
     }
 })

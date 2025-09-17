@@ -9,13 +9,17 @@ class Member private constructor(
     @field:GeneratedValue(strategy = GenerationType.IDENTITY)
     @field:Column(name = "member_id", nullable = false, updatable = false)
     private var id: Long? = null,
-    private var email: String,
+    private var email: Email,
     private var nickname: String,
     private var passwordHash: String,
 ) {
     companion object {
-        fun create(email: String, nickname: String, password: String, passwordEncoder: PasswordEncoder): Member {
-            return Member(email = email, nickname = nickname, passwordHash = passwordEncoder.encode(password))
+        fun create(memberCreateRequest: MemberCreateRequest, passwordEncoder: PasswordEncoder): Member {
+            return Member(
+                email = Email(memberCreateRequest.email),
+                nickname = memberCreateRequest.nickname,
+                passwordHash = passwordEncoder.encode(memberCreateRequest.password)
+            )
         }
     }
 
@@ -45,6 +49,10 @@ class Member private constructor(
 
     fun changePassword(newPassword: String, passwordEncoder: PasswordEncoder) {
         passwordHash = passwordEncoder.encode(newPassword)
+    }
+
+    fun isActive(): Boolean {
+        return memberStatus == MemberStatus.ACTIVE
     }
 
     fun getMemberStatus(): MemberStatus {
