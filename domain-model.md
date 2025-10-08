@@ -52,21 +52,21 @@ _Entity_
 - status : 회원 상태
 
 #### 행위
-- constructor(email, nickname, passwordHash, status) : 회원 생성
-- activate() : 가입을 완료시킨다
+- register() : 회원 등록 - email, nickname, passwordHash, status
+- activate() : 등록을 완료시킨다
 - deactivate() : 탈퇴시킨다
 
 #### 규칙
-- 회원 생성 후 상태는 `가입 대기`
-- 일정 조건을 만족하면 가입 완료가 된다
-- 가입 완료 상태에서만 탈퇴 가능하다
+- 회원 생성 후 상태는 `등록 대기`
+- 일정 조건을 만족하면 등록 완료가 된다
+- 등록 완료 상태에서만 탈퇴 가능하다
 - 
 
 ### 회원 상태(MemberStatus)
 _Enum_
 
-- PENDING : 가입 대기
-- ACTIVE : 가입 완료, 활성 상태
+- PENDING : 등록 대기
+- ACTIVE : 등록 완료, 활성 상태
 - DEACTIVATED : 탈퇴 상태
 
 ### 비밀번호 인코더 (PasswordEncoder)

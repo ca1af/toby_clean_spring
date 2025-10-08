@@ -14,11 +14,11 @@ class Member private constructor(
     private var passwordHash: String,
 ) {
     companion object {
-        fun create(memberCreateRequest: MemberCreateRequest, passwordEncoder: PasswordEncoder): Member {
+        fun register(memberRegisterRequest: MemberRegisterRequest, passwordEncoder: PasswordEncoder): Member {
             return Member(
-                email = Email(memberCreateRequest.email),
-                nickname = memberCreateRequest.nickname,
-                passwordHash = passwordEncoder.encode(memberCreateRequest.password)
+                email = Email(memberRegisterRequest.email),
+                nickname = memberRegisterRequest.nickname,
+                passwordHash = passwordEncoder.encode(memberRegisterRequest.password)
             )
         }
     }

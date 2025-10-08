@@ -1,6 +1,6 @@
 package com.calaf.cleanspring.domain
 
-data class MemberCreateRequest(
+data class MemberRegisterRequest(
     val email: String,
     val nickname: String,
     val password: String,

@@ -19,8 +19,8 @@ class MemberTest : FreeSpec({
     }
 
     beforeTest {
-        member = Member.create(
-            MemberCreateRequest(
+        member = Member.register(
+            MemberRegisterRequest(
                 nickname = "A",
                 email = "email@github.com",
                 password = "secret",
@@ -29,7 +29,7 @@ class MemberTest : FreeSpec({
         )
     }
 
-    "멤버를 생성하면 상태는 PENDING 이다" {
+    "멤버를 등록하면 상태는 PENDING 이다" {
         member.getMemberStatus() shouldBe MemberStatus.PENDING
     }
 
@@ -110,8 +110,8 @@ class MemberTest : FreeSpec({
 
     "올바르지 않은 이메일은 예외" {
         shouldThrow<IllegalArgumentException> {
-            Member.create(
-                MemberCreateRequest(nickname = "A", email = "invalidemail.com", password = "secret"),
+            Member.register(
+                MemberRegisterRequest(nickname = "A", email = "invalidemail.com", password = "secret"),
                 passwordEncoder = passwordEncoder
             )
         }

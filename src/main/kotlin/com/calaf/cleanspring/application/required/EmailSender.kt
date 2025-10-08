@@ -1,0 +1,10 @@
+package com.calaf.cleanspring.application.required
+
+import com.calaf.cleanspring.domain.Email
+
+/**
+ * 이메일을 발송한다
+ */
+fun interface EmailSender {
+    fun send(email: Email, subject: String, body: String)
+}
